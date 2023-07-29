@@ -11,6 +11,7 @@ const SingleVideo = () => {
   const [addNoteModal, setAddNoteModal] = useState({
     type: "",
     show: false,
+    id: ""
   });
 
   const { videoState, videoDispatch, isInWatchLater } =
@@ -25,8 +26,6 @@ const SingleVideo = () => {
   const moreVideos = videoState?.videoData?.filter(
     ({ _id }) => _id !== selectedVideo?._id
   );
-
-  console.log(selectedVideo?.notes);
 
   return (
     <div className="single-video">
@@ -80,6 +79,7 @@ const SingleVideo = () => {
                     ...addNoteModal,
                     show: true,
                     type: "Add a Note",
+                    id: selectedVideo?._id
                   })
                 }
               ></i>
@@ -90,8 +90,8 @@ const SingleVideo = () => {
             <h3>My Notes</h3>
             <div className="notes-container">
               {selectedVideo?.notes?.map((currNote) => (
-                <div key={currNote} className="note-card">
-                  <p>{currNote}</p>
+                <div key={currNote?.id} className="note-card">
+                  <p>{currNote?.text}</p>
                   <div>
                     <i className="fa-solid fa-pen" title="edit-note"></i>
                     <i

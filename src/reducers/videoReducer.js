@@ -26,16 +26,21 @@ export const videoReducer = (state, { type, payload }) => {
         ),
       };
     case "ADD_NOTE":
-      const updatedVideoData = state?.videoData?.map((video) => {
-        if (video?._id === payload?.id) {
-          const updatedNote = video?.notes
-            ? [payload?.text, ...video?.notes]
-            : [payload?.text];
-          return { ...video, notes: updatedNote };
-        }
-        return video;
-      });
-      return { ...state, videoData: updatedVideoData };
+      return {
+        ...state,
+        videoData: state?.videoData?.map((video) =>
+          video?._id === payload?.id
+            ? {
+                ...video,
+                notes: video?.notes
+                  ? [...video?.notes, payload?.text]
+                  : [payload?.text],
+              }
+            : video
+        ),
+      };
+    case "DELETE_NOTE":
+      return { ...state };
     default:
       return state;
   }

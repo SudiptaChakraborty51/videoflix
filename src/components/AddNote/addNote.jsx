@@ -2,16 +2,29 @@ import React, { useContext, useState } from "react";
 import "./addNote.css";
 import { VideoContext } from "../../contexts/videoContext";
 
-const AddNote = ({ addNoteModal, setAddNoteModal, note, id }) => {
-  const [noteData, setNoteData] = useState("");
-  const { videoDispatch } = useContext(VideoContext);
+const AddNote = ({ addNoteModal, setAddNoteModal, id }) => {
+  const { videoDispatch, videoState } = useContext(VideoContext);
+  const [noteData, setNoteData] = useState({
+    id:
+      videoState?.videoData
+        ?.find((video) => video?._id === id)
+        ?.notes?.find((note) => note?.id === addNoteModal?.id) ?? Math.random(),
+    text:
+      videoState?.videoData
+        ?.find((video) => video?._id === id)
+        ?.notes?.find((note) => note?.id === addNoteModal?.id) ?? "",
+  });
 
   const addHandler = () => {
-    videoDispatch({
-      type: "ADD_NOTE",
-      payload: { text: noteData, id: id },
-    });
-    setAddNoteModal({ ...addNoteModal, show: false });
+    if (noteData?.text?.trim() !== "") {
+      videoDispatch({
+        type: "ADD_NOTE",
+        payload: { text: noteData, id: addNoteModal?.id },
+      });
+      setAddNoteModal({ ...addNoteModal, show: false });
+    } else {
+      alert("Please add a note!");
+    }
   };
 
   return (
@@ -30,8 +43,8 @@ const AddNote = ({ addNoteModal, setAddNoteModal, note, id }) => {
           <input
             type="text"
             placeholder="Write a note"
-            value={noteData}
-            onChange={(e) => setNoteData(e.target.value)}
+            value={noteData?.text}
+            onChange={(e) => setNoteData({ ...noteData, text: e.target.value })}
           />
           <button onClick={addHandler}>Add new Note</button>
         </div>

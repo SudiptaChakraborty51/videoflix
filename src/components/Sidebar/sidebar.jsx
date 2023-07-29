@@ -12,9 +12,9 @@ const Sidebar = () => {
         <i className="fa-solid fa-house"></i> <span>Home</span>
       </NavLink>
       <NavLink to="/explore" className="sidebar-items" style={getActiveStyle}>
-        <i className="fas fa-home"></i>Explore
+        <i className="fa-solid fa-compass"></i>Explore
       </NavLink>
-      <NavLink to="/playlist" className="sidebar-items" style={getActiveStyle}>
+      <NavLink to="/playlists" className="sidebar-items" style={getActiveStyle}>
         <i className="fas fa-play-circle"></i>Playlist
       </NavLink>
       <NavLink

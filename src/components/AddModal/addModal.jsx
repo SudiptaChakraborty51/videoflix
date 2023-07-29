@@ -51,11 +51,12 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
             {videoState?.playlists?.map((playlist) => (
               <div key={playlist?.name} className="playlist-item">
                 <p
-                  onClick={() =>
+                  onClick={() => {
                     videoDispatch({
                       type: "ADD_VIDEO_TO_PLAYLIST",
                       payload: { video: video, playlistName: playlist?.name },
-                    })
+                    });
+                    setAddModal({...addModal, show: false});}
                   }
                 >
                   {playlist?.name}

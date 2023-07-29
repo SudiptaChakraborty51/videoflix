@@ -80,6 +80,21 @@ export const videoReducer = (state, { type, payload }) => {
             : item
         ),
       };
+    case "REMOVE_FROM_PLAYLIST":
+      return {
+        ...state,
+        playlists: state?.playlists?.map((playlist) =>
+          playlist?.name?.toLowerCase()?.trim() ===
+          payload?.playlistName?.toLowerCase()?.trim()
+            ? {
+                ...playlist,
+                videos: playlist?.videos?.filter(
+                  (video) => video._id !== payload?.videoId
+                ),
+              }
+            : playlist
+        ),
+      };
     default:
       return state;
   }

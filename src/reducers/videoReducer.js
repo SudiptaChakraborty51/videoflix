@@ -65,6 +65,21 @@ export const videoReducer = (state, { type, payload }) => {
             : video
         ),
       };
+    case "ADD_VIDEO_TO_PLAYLIST":
+      return {
+        ...state,
+        playlists: state?.playlists.map((item) =>
+          item?.name?.toLowerCase()?.trim() ===
+          payload?.playlistName?.toLowerCase()?.trim()
+            ? {
+                ...item,
+                videos: item?.videos
+                  ? [...item?.videos, payload?.video]
+                  : [payload?.video],
+              }
+            : item
+        ),
+      };
     default:
       return state;
   }

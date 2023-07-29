@@ -15,7 +15,9 @@ const PlaylistCard = ({ playlist }) => {
         }
       ></i>
       <img src={playlist?.src} alt={playlist?.name} />
-      <h4>{playlist?.name}</h4>
+      <h4>
+        {playlist?.name} ({playlist?.videos?.length})
+      </h4>
       <span>{playlist?.description}</span>
     </div>
   );

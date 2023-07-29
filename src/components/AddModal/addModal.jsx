@@ -2,14 +2,14 @@ import React, { useContext, useState } from "react";
 import "./addModal.css";
 import { VideoContext } from "../../contexts/videoContext";
 
-const AddModal = ({ addModal, setAddModal }) => {
+const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
   const [playlistData, setPlaylistData] = useState({
     name: "",
     description: "",
     src: "https://source.unsplash.com/random/800x800/?playlist",
   });
 
-  const { videoDispatch } = useContext(VideoContext);
+  const { videoDispatch, videoState } = useContext(VideoContext);
 
   const addHandler = () => {
     videoDispatch({ type: "ADD_PLAYLIST", payload: playlistData });
@@ -46,6 +46,34 @@ const AddModal = ({ addModal, setAddModal }) => {
           ></textarea>
           <button onClick={addHandler}>Create new Playlist</button>
         </div>
+        {fromSingleVideo && (
+          <div className="playlist-list">
+            {videoState?.playlists?.map((playlist) => (
+              <div key={playlist?.name} className="playlist-item">
+                <p
+                  onClick={() =>
+                    videoDispatch({
+                      type: "ADD_VIDEO_TO_PLAYLIST",
+                      payload: { video: video, playlistName: playlist?.name },
+                    })
+                  }
+                >
+                  {playlist?.name}
+                </p>
+                <i
+                  className="fa-solid fa-circle-xmark"
+                  title="delete playlist"
+                  onClick={() =>
+                    videoDispatch({
+                      type: "DELETE_PLAYLIST",
+                      payload: playlist?.name,
+                    })
+                  }
+                ></i>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

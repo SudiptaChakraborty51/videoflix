@@ -52,9 +52,9 @@
 }
 
 .modal-content textarea {
-    resize: none;
-    outline: none;
-    border: none;
+  resize: none;
+  outline: none;
+  border: none;
 }
 
 .modal-content button {
@@ -68,4 +68,28 @@
   margin: 1rem auto;
   cursor: pointer;
   width: 100%;
+}
+
+.playlist-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist-list .playlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 20px);
+  border: 1px solid lightgray;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.playlist-list .playlist-item p{
+  cursor: pointer;
+}
+
+.playlist-list .playlist-item i {
+  cursor: pointer;
 }

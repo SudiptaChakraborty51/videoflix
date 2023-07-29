@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { VideoContext } from "../../contexts/videoContext";
 import "./singleVideo.css";
 import AddNote from "../../components/AddNote/addNote";
+import AddModal from "../../components/AddModal/addModal";
 
 const SingleVideo = () => {
   const { ID } = useParams();
@@ -13,6 +14,8 @@ const SingleVideo = () => {
     show: false,
     id: "",
   });
+
+  const [addModal, setAddModal] = useState({ type: "", show: false });
 
   const { videoState, videoDispatch, isInWatchLater } =
     useContext(VideoContext);
@@ -70,6 +73,13 @@ const SingleVideo = () => {
               <i
                 className="fa-solid fa-square-plus"
                 title="add to playlist"
+                onClick={() =>
+                  setAddModal({
+                    ...addModal,
+                    show: true,
+                    type: "Add to Playlist",
+                  })
+                }
               ></i>
               <i
                 className="fa-solid fa-square-pen"
@@ -146,6 +156,9 @@ const SingleVideo = () => {
           setAddNoteModal={setAddNoteModal}
           id={selectedVideo?._id}
         />
+      )}
+      {addModal.show && (
+        <AddModal addModal={addModal} setAddModal={setAddModal} fromSingleVideo video={selectedVideo}/>
       )}
     </div>
   );

@@ -15,6 +15,8 @@ export const videoReducer = (state, { type, payload }) => {
           (video) => video?._id !== payload?._id
         ),
       };
+    case "ADD_PLAYLIST":
+      return { ...state, playlists: [payload, ...state?.playlists] };
     case "DELETE_PLAYLIST":
       return {
         ...state,

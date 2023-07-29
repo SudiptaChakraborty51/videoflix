@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./playlists.css";
 import Sidebar from "../../components/Sidebar/sidebar";
 import { VideoContext } from "../../contexts/videoContext";
 import PlaylistCard from "../../components/PlaylistCard/playlistCard";
+import AddModal from "../../components/AddModal/addModal";
 
 const Playlists = () => {
   const { videoState } = useContext(VideoContext);
+
+  const [addModal, setAddModal] = useState({ show: false, type: "" });
 
   return (
     <div className="playlists">
@@ -23,9 +26,15 @@ const Playlists = () => {
           <i
             className="fa-regular fa-square-plus add-button"
             title="add playlist"
+            onClick={() =>
+              setAddModal({ ...addModal, show: true, type: "Add To Playlist" })
+            }
           ></i>
         </div>
       </div>
+      {addModal.show && (
+        <AddModal addModal={addModal} setAddModal={setAddModal} />
+      )}
     </div>
   );
 };

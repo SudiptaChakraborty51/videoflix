@@ -11,6 +11,13 @@ const VideoProvider = ({ children }) => {
     categoriesData: categories,
     search: "",
     watchLaterVideos: [],
+    playlists: [
+      {
+        src: "https://picsum.photos/300/179",
+        name: "Music Videos",
+        description: "my personal favourites",
+      },
+    ],
   };
 
   const [videoState, videoDispatch] = useReducer(videoReducer, initialState);

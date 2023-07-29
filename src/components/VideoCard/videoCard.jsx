@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./videoCard.css";
 import { useNavigate } from "react-router-dom";
+import { VideoContext } from "../../contexts/videoContext";
 
 const VideoCard = ({ video }) => {
   const navigate = useNavigate();
+  const { videoDispatch, isInWatchLater } = useContext(VideoContext);
+
   return (
     <div className="video-card">
-      <i className="fa-regular fa-clock" title="watch later"></i>
+      {isInWatchLater(video) ? (
+        <i
+          className="fa-solid fa-clock"
+          title="remove from watch later"
+          onClick={() =>
+            videoDispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: video })
+          }
+        ></i>
+      ) : (
+        <i className="fa-regular fa-clock" title="add to watch later" onClick={() =>
+          videoDispatch({ type: "ADD_TO_WATCH_LATER", payload: video })
+        }></i>
+      )}
+
       <img
         src={video?.thumbnail}
         alt={video?.category}

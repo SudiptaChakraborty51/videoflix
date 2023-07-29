@@ -10,10 +10,20 @@ const VideoProvider = ({ children }) => {
     videoData: videos,
     categoriesData: categories,
     search: "",
+    watchLaterVideos: [],
   };
+
   const [videoState, videoDispatch] = useReducer(videoReducer, initialState);
+
+  const isInWatchLater = (videoToCheck) =>
+    videoState.watchLaterVideos.find(
+      (video) => video?._id === videoToCheck?._id
+    );
+
   return (
-    <VideoContext.Provider value={{ videoState, videoDispatch }}>
+    <VideoContext.Provider
+      value={{ videoState, videoDispatch, isInWatchLater }}
+    >
       {children}
     </VideoContext.Provider>
   );

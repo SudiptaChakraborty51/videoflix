@@ -13,8 +13,6 @@ const SingleVideo = () => {
     ({ _id }) => _id === Number(ID)
   );
 
-  console.log(selectedVideo);
-
   return (
     <div className="single-video">
       <Sidebar />

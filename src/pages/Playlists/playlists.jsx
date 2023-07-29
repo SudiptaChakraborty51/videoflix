@@ -13,10 +13,17 @@ const Playlists = () => {
       <div className="playlists-main">
         <h2>Playlists</h2>
         <div className="playlist-container">
-          {videoState?.playlists?.map((playlist) => (
-            <PlaylistCard key={playlist?.name} playlist={playlist} />
-          ))}
-          <i className="fa-regular fa-square-plus add-button" title="add playlist"></i>
+          {videoState?.playlists?.length !== 0 ? (
+            videoState?.playlists?.map((playlist) => (
+              <PlaylistCard key={playlist?.name} playlist={playlist} />
+            ))
+          ) : (
+            <p>No playlists found! Add a new playlist.</p>
+          )}
+          <i
+            className="fa-regular fa-square-plus add-button"
+            title="add playlist"
+          ></i>
         </div>
       </div>
     </div>

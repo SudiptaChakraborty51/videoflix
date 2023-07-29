@@ -15,6 +15,14 @@ export const videoReducer = (state, { type, payload }) => {
           (video) => video?._id !== payload?._id
         ),
       };
+    case "DELETE_PLAYLIST":
+      return {
+        ...state,
+        playlists: state.playlists.filter(
+          (playlist) =>
+            playlist?.name.toLowerCase().trim() !== payload.toLowerCase().trim()
+        ),
+      };
     default:
       return state;
   }

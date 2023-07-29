@@ -7,6 +7,7 @@ export const VideoContext = createContext();
 const VideoProvider = ({ children }) => {
   const initialState = {
     videoData: videos,
+    search: ""
   };
   const [videoState, videoDispatch] = useReducer(videoReducer, initialState);
   return (

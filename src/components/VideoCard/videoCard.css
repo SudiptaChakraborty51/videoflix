@@ -1,0 +1,37 @@
+.video-card {
+    width: 300px;
+    height: 280px;
+    position: relative;
+    cursor: pointer;
+}
+
+.video-card i {
+    color: var(--primary-color);
+    background-color: white;
+    padding: 5px;
+    position: absolute;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+}
+
+.video-card .thumbnail {
+    width: 100%;
+    object-fit: cover;
+}
+
+.video-card .video-card-content {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.video-card .video-card-content img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+}
+
+.video-card .video-card-content div {
+    display: flex;
+    flex-direction: column;
+}

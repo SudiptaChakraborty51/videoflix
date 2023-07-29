@@ -1,0 +1,23 @@
+.explore-main {
+  width: calc(100% - 16% - 20px);
+  padding: 10px 0;
+  position: relative;
+  left: 15%;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.explore-main h2 {
+  text-align: center;
+}
+
+.explore-main input{
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+    margin: 10px 0 20px 0;
+}

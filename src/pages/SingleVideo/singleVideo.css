@@ -1,0 +1,27 @@
+.single-video-main {
+    width: calc(100% - 16% - 20px);
+    padding: 10px 0;
+    position: relative;
+    left: 15%;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+  
+  .single-video-main h2 {
+    text-align: center;
+  }
+
+  .single-video-main .video-content-container {
+    width: 60%;
+  }
+  
+  .single-video-main .video-content-container iframe {
+    width: 100%;
+    height: 350px;
+  }
+
+  .single-video-main .more-videos-container {
+    width: 40%;
+  }

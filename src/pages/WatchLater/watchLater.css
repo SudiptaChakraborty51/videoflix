@@ -12,3 +12,9 @@
 .watch-later-main h2 {
   text-align: center;
 }
+
+.watch-later-container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}

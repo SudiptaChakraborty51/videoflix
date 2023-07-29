@@ -54,7 +54,17 @@ export const videoReducer = (state, { type, payload }) => {
         ),
       };
     case "DELETE_NOTE":
-      return { ...state };
+      return {
+        ...state,
+        videoData: state?.videoData?.map((video) =>
+          video?._id === payload?.videoId
+            ? {
+                ...video,
+                notes: video?.notes?.filter((note) => note?.id !== payload?.id),
+              }
+            : video
+        ),
+      };
     default:
       return state;
   }

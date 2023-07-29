@@ -101,13 +101,22 @@ const SingleVideo = () => {
                           ...addNoteModal,
                           show: true,
                           id: currNote?.id,
-                          type: "Edit Note"
+                          type: "Edit Note",
                         })
                       }
                     ></i>
                     <i
                       className="fa-solid fa-trash-can"
                       title="delete-note"
+                      onClick={() =>
+                        videoDispatch({
+                          type: "DELETE_NOTE",
+                          payload: {
+                            id: currNote?.id,
+                            videoId: selectedVideo?._id,
+                          },
+                        })
+                      }
                     ></i>
                   </div>
                 </div>

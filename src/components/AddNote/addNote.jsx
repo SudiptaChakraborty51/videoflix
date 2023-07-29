@@ -8,11 +8,12 @@ const AddNote = ({ addNoteModal, setAddNoteModal, id }) => {
     id:
       videoState?.videoData
         ?.find((video) => video?._id === id)
-        ?.notes?.find((note) => note?.id === addNoteModal?.id) ?? Math.random(),
+        ?.notes?.find((note) => note?.id === addNoteModal?.id)?.id ??
+      Math.random(),
     text:
       videoState?.videoData
         ?.find((video) => video?._id === id)
-        ?.notes?.find((note) => note?.id === addNoteModal?.id) ?? "",
+        ?.notes?.find((note) => note?.id === addNoteModal?.id)?.text ?? "",
   });
 
   const addHandler = () => {
@@ -20,6 +21,18 @@ const AddNote = ({ addNoteModal, setAddNoteModal, id }) => {
       videoDispatch({
         type: "ADD_NOTE",
         payload: { text: noteData, id: addNoteModal?.id },
+      });
+      setAddNoteModal({ ...addNoteModal, show: false });
+    } else {
+      alert("Please add a note!");
+    }
+  };
+
+  const editHandler = () => {
+    if (noteData?.text?.trim() !== "") {
+      videoDispatch({
+        type: "EDIT_NOTE",
+        payload: { text: noteData, id: addNoteModal?.id, videoId: id },
       });
       setAddNoteModal({ ...addNoteModal, show: false });
     } else {
@@ -46,7 +59,21 @@ const AddNote = ({ addNoteModal, setAddNoteModal, id }) => {
             value={noteData?.text}
             onChange={(e) => setNoteData({ ...noteData, text: e.target.value })}
           />
-          <button onClick={addHandler}>Add new Note</button>
+          <button
+            onClick={
+              videoState?.videoData
+                ?.find((video) => video?._id === id)
+                ?.notes?.find((note) => note?.id === addNoteModal?.id)
+                ? editHandler
+                : addHandler
+            }
+          >
+            {videoState?.videoData
+              ?.find((video) => video?._id === id)
+              ?.notes?.find((note) => note?.id === addNoteModal?.id)
+              ? "Edit Note"
+              : "Add new Note"}
+          </button>
         </div>
       </div>
     </div>

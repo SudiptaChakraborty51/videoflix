@@ -11,7 +11,7 @@ const SingleVideo = () => {
   const [addNoteModal, setAddNoteModal] = useState({
     type: "",
     show: false,
-    id: ""
+    id: "",
   });
 
   const { videoState, videoDispatch, isInWatchLater } =
@@ -79,7 +79,7 @@ const SingleVideo = () => {
                     ...addNoteModal,
                     show: true,
                     type: "Add a Note",
-                    id: selectedVideo?._id
+                    id: selectedVideo?._id,
                   })
                 }
               ></i>
@@ -93,7 +93,18 @@ const SingleVideo = () => {
                 <div key={currNote?.id} className="note-card">
                   <p>{currNote?.text}</p>
                   <div>
-                    <i className="fa-solid fa-pen" title="edit-note"></i>
+                    <i
+                      className="fa-solid fa-pen"
+                      title="edit-note"
+                      onClick={() =>
+                        setAddNoteModal({
+                          ...addNoteModal,
+                          show: true,
+                          id: currNote?.id,
+                          type: "Edit Note"
+                        })
+                      }
+                    ></i>
                     <i
                       className="fa-solid fa-trash-can"
                       title="delete-note"

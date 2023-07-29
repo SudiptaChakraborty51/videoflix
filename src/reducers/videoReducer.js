@@ -25,6 +25,17 @@ export const videoReducer = (state, { type, payload }) => {
             playlist?.name.toLowerCase().trim() !== payload.toLowerCase().trim()
         ),
       };
+    case "ADD_NOTE":
+      const updatedVideoData = state?.videoData?.map((video) => {
+        if (video?._id === payload?.id) {
+          const updatedNote = video?.notes
+            ? [payload?.text, ...video?.notes]
+            : [payload?.text];
+          return { ...video, notes: updatedNote };
+        }
+        return video;
+      });
+      return { ...state, videoData: updatedVideoData };
     default:
       return state;
   }

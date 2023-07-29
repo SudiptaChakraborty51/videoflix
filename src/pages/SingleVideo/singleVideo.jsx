@@ -1,11 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Sidebar from "../../components/Sidebar/sidebar";
 import { useNavigate, useParams } from "react-router-dom";
 import { VideoContext } from "../../contexts/videoContext";
 import "./singleVideo.css";
+import AddNote from "../../components/AddNote/addNote";
 
 const SingleVideo = () => {
   const { ID } = useParams();
+
+  const [addNoteModal, setAddNoteModal] = useState({
+    type: "",
+    show: false,
+  });
 
   const { videoState, videoDispatch, isInWatchLater } =
     useContext(VideoContext);
@@ -19,6 +25,8 @@ const SingleVideo = () => {
   const moreVideos = videoState?.videoData?.filter(
     ({ _id }) => _id !== selectedVideo?._id
   );
+
+  console.log(selectedVideo?.notes);
 
   return (
     <div className="single-video">
@@ -64,12 +72,36 @@ const SingleVideo = () => {
                 className="fa-solid fa-square-plus"
                 title="add to playlist"
               ></i>
-              <i className="fa-solid fa-square-pen" title="add notes"></i>
+              <i
+                className="fa-solid fa-square-pen"
+                title="add notes"
+                onClick={() =>
+                  setAddNoteModal({
+                    ...addNoteModal,
+                    show: true,
+                    type: "Add a Note",
+                  })
+                }
+              ></i>
             </div>
           </div>
           <hr />
           <div className="my-notes-container">
             <h3>My Notes</h3>
+            <div className="notes-container">
+              {selectedVideo?.notes?.map((currNote) => (
+                <div key={currNote} className="note-card">
+                  <p>{currNote}</p>
+                  <div>
+                    <i className="fa-solid fa-pen" title="edit-note"></i>
+                    <i
+                      className="fa-solid fa-trash-can"
+                      title="delete-note"
+                    ></i>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div className="more-videos-container">
@@ -88,6 +120,13 @@ const SingleVideo = () => {
           ))}
         </div>
       </div>
+      {addNoteModal.show && (
+        <AddNote
+          addNoteModal={addNoteModal}
+          setAddNoteModal={setAddNoteModal}
+          id={selectedVideo?._id}
+        />
+      )}
     </div>
   );
 };

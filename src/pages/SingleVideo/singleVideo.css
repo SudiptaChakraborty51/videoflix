@@ -76,3 +76,27 @@
 .more-videos-container h3 {
   margin: 0 0 10px 0;
 }
+
+.notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notes-container .note-card {
+  background-color: lightgray;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.notes-container .note-card div {
+  display: flex;
+  gap: 1rem;
+}
+
+.notes-container .note-card div i {
+  cursor: pointer;
+}

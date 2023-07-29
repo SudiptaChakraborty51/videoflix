@@ -12,7 +12,7 @@ const WatchLater = () => {
       <Sidebar />
       <div className="watch-later-main">
         <h2>Watch Later</h2>
-        <div>
+        <div className="video-listing-container">
           {videoState?.watchLaterVideos?.length === 0 ? (
             <p>No videos in watch later!</p>
           ) : (

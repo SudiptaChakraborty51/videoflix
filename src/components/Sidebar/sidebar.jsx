@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const getActiveStyle = ({ isActive }) => ({
-    color: isActive && "var(--primary-color)"
+    color: isActive && "var(--primary-color)",
   });
   return (
     <div className="sidebar">

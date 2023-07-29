@@ -6,12 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { videoState } = useContext(VideoContext);
-
-  const categoryArr = videoState?.videoData?.reduce(
-    (acc, { category }) => (!acc.includes(category) ? [...acc, category] : acc),
-    []
-  );
-
   const navigate = useNavigate();
 
   return (
@@ -20,17 +14,14 @@ const Home = () => {
       <div className="home-main">
         <h2>Categories</h2>
         <div className="categories-container">
-          {categoryArr?.map((category) => (
+          {videoState?.categoriesData?.map((category) => (
             <div
-              key={category}
+              key={category?._id}
               className="category-card"
-              onClick={() => navigate(`/videos/${category}`)}
+              onClick={() => navigate(`/videos/${category?.category}`)}
             >
-              <img
-                src={`https://source.unsplash.com/random/800x800/?${category}`}
-                alt={category}
-              />
-              <h4>{category}</h4>
+              <img src={category?.thumbnail} alt={category?.category} />
+              <h4>{category?.category}</h4>
             </div>
           ))}
         </div>

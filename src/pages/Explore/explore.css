@@ -13,11 +13,11 @@
   text-align: center;
 }
 
-.explore-main input{
-    border-radius: 10px;
-    padding: 10px;
-    border: none;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    text-align: center;
-    margin: 10px 0 20px 0;
+.explore-main input {
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-align: center;
+  margin: 10px 0 20px 0;
 }

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Sidebar from "../../components/Sidebar/sidebar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { VideoContext } from "../../contexts/videoContext";
 import "./singleVideo.css";
 
@@ -9,6 +9,8 @@ const SingleVideo = () => {
 
   const { videoState, videoDispatch, isInWatchLater } =
     useContext(VideoContext);
+
+  const navigate = useNavigate();
 
   const selectedVideo = videoState?.videoData?.find(
     ({ _id }) => _id === Number(ID)
@@ -73,7 +75,10 @@ const SingleVideo = () => {
         <div className="more-videos-container">
           <h3>More Videos</h3>
           {moreVideos?.map((video) => (
-            <div className="more-video-card">
+            <div
+              className="more-video-card"
+              onClick={() => navigate(`/video/${video?._id}`)}
+            >
               <img src={video?.thumbnail} alt={video?.title} />
               <div>
                 <strong>{video?.title}</strong>

@@ -15,9 +15,10 @@ const PlaylistCard = ({ playlist }) => {
       <i
         className="fa-solid fa-circle-xmark"
         title="delete playlist"
-        onClick={() =>
-          videoDispatch({ type: "DELETE_PLAYLIST", payload: playlist?.name })
-        }
+        onClick={(e) => {
+          e.stopPropagation();
+          videoDispatch({ type: "DELETE_PLAYLIST", payload: playlist?.name });
+        }}
       ></i>
       <img src={playlist?.src} alt={playlist?.name} />
       <h4>

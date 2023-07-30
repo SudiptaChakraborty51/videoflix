@@ -12,8 +12,9 @@ const SingleVideo = () => {
   const [addNoteModal, setAddNoteModal] = useState({
     type: "",
     show: false,
-    id: "",
   });
+
+  const [editNoteModal, setEditNoteModal] = useState({ type: "", show: false });
 
   const [addModal, setAddModal] = useState({ type: "", show: false });
 
@@ -89,7 +90,6 @@ const SingleVideo = () => {
                     ...addNoteModal,
                     show: true,
                     type: "Add a Note",
-                    id: selectedVideo?._id,
                   })
                 }
               ></i>
@@ -107,14 +107,21 @@ const SingleVideo = () => {
                       className="fa-solid fa-pen"
                       title="edit-note"
                       onClick={() =>
-                        setAddNoteModal({
-                          ...addNoteModal,
+                        setEditNoteModal({
+                          ...editNoteModal,
                           show: true,
-                          id: currNote?.id,
                           type: "Edit Note",
                         })
                       }
                     ></i>
+                    {editNoteModal.show && (
+                      <AddNote
+                        editNoteModal={editNoteModal}
+                        setEditNoteModal={setEditNoteModal}
+                        note={currNote}
+                        currentVideo={selectedVideo}
+                      />
+                    )}
                     <i
                       className="fa-solid fa-trash-can"
                       title="delete-note"
@@ -150,15 +157,20 @@ const SingleVideo = () => {
           ))}
         </div>
       </div>
-      {addNoteModal.show && (
-        <AddNote
-          addNoteModal={addNoteModal}
-          setAddNoteModal={setAddNoteModal}
-          id={selectedVideo?._id}
+      {addModal.show && (
+        <AddModal
+          addModal={addModal}
+          setAddModal={setAddModal}
+          fromSingleVideo
+          video={selectedVideo}
         />
       )}
-      {addModal.show && (
-        <AddModal addModal={addModal} setAddModal={setAddModal} fromSingleVideo video={selectedVideo}/>
+      {addNoteModal.show && (
+        <AddNote
+          currentVideo={selectedVideo}
+          addNoteModal={addNoteModal}
+          setAddNoteModal={setAddNoteModal}
+        />
       )}
     </div>
   );

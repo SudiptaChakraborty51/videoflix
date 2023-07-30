@@ -29,12 +29,12 @@ export const videoReducer = (state, { type, payload }) => {
       return {
         ...state,
         videoData: state?.videoData?.map((video) =>
-          video?._id === payload?.id
+          video?._id === payload?.videoId
             ? {
                 ...video,
                 notes: video?.notes
-                  ? [...video?.notes, payload?.text]
-                  : [payload?.text],
+                  ? [...video?.notes, payload?.note]
+                  : [payload?.note],
               }
             : video
         ),
@@ -47,7 +47,7 @@ export const videoReducer = (state, { type, payload }) => {
             ? {
                 ...video,
                 notes: video?.notes?.map((note) =>
-                  note?.id === payload?.id ? payload?.text : note
+                  note?.id === payload?.noteId ? payload?.note : note
                 ),
               }
             : video

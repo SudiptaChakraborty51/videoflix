@@ -11,8 +11,13 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
 
   const { videoDispatch, videoState } = useContext(VideoContext);
 
-  const addHandler = () => {
-    videoDispatch({ type: "ADD_PLAYLIST", payload: playlistData });
+  const addHandler = (e) => {
+    e.preventDefault();
+    if(videoState?.playlists?.some((playlist) => playlist?.name?.toLowerCase() !== playlistData?.name?.toLowerCase())) {
+      videoDispatch({ type: "ADD_PLAYLIST", payload: playlistData });
+    }else {
+      alert("This playlist is already exists!");
+    }
     setAddModal({ ...addModal, show: false });
   };
 
@@ -26,7 +31,7 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
             onClick={() => setAddModal((prev) => ({ ...prev, show: false }))}
           ></i>
         </div>
-        <div className="modal-content">
+        <form className="modal-content" onSubmit={addHandler}>
           <input
             type="text"
             placeholder="Enter title of your playlist"
@@ -34,6 +39,7 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
             onChange={(e) =>
               setPlaylistData({ ...playlistData, name: e.target.value })
             }
+            required
           />
           <textarea
             type="text"
@@ -43,9 +49,10 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
             onChange={(e) =>
               setPlaylistData({ ...playlistData, description: e.target.value })
             }
+            required
           ></textarea>
-          <button onClick={addHandler}>Create new Playlist</button>
-        </div>
+          <button type="submit">Create new Playlist</button>
+        </form>
         {fromSingleVideo && (
           <div className="playlist-list">
             {videoState?.playlists?.map((playlist) => (

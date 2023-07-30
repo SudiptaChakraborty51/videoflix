@@ -2,79 +2,70 @@ import React, { useContext, useState } from "react";
 import "./addNote.css";
 import { VideoContext } from "../../contexts/videoContext";
 
-const AddNote = ({ addNoteModal, setAddNoteModal, id }) => {
-  const { videoDispatch, videoState } = useContext(VideoContext);
+const AddNote = ({
+  addNoteModal,
+  setAddNoteModal,
+  editNoteModal,
+  setEditNoteModal,
+  note,
+  currentVideo,
+}) => {
+  const { videoDispatch } = useContext(VideoContext);
   const [noteData, setNoteData] = useState({
-    id:
-      videoState?.videoData
-        ?.find((video) => video?._id === id)
-        ?.notes?.find((note) => note?.id === addNoteModal?.id)?.id ??
-      Math.random(),
-    text:
-      videoState?.videoData
-        ?.find((video) => video?._id === id)
-        ?.notes?.find((note) => note?.id === addNoteModal?.id)?.text ?? "",
+    id: note ? note.id : Math.random(),
+    text: note ? note.text : "",
   });
 
-  const addHandler = () => {
-    if (noteData?.text?.trim() !== "") {
-      videoDispatch({
-        type: "ADD_NOTE",
-        payload: { text: noteData, id: addNoteModal?.id },
-      });
-      setAddNoteModal({ ...addNoteModal, show: false });
-    } else {
-      alert("Please add a note!");
-    }
-  };
-
-  const editHandler = () => {
-    if (noteData?.text?.trim() !== "") {
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (note) {
       videoDispatch({
         type: "EDIT_NOTE",
-        payload: { text: noteData, id: addNoteModal?.id, videoId: id },
+        payload: {
+          note: { ...note, text: noteData.text, id: noteData.id },
+          videoId: currentVideo?._id,
+          noteId: note?.id,
+        },
       });
-      setAddNoteModal({ ...addNoteModal, show: false });
     } else {
-      alert("Please add a note!");
+      videoDispatch({
+        type: "ADD_NOTE",
+        payload: {
+          note: { ...note, text: noteData.text, id: noteData.id },
+          videoId: currentVideo?._id,
+          noteId: note?.id,
+        },
+      });
     }
+    setNoteData("");
+    setAddNoteModal && setAddNoteModal({ ...addNoteModal, show: false });
+    setEditNoteModal && setEditNoteModal({ ...editNoteModal, show: false });
   };
 
   return (
     <div className="add-modal-container">
       <div className="add-modal">
         <div className="add-modal-header">
-          <h3>{addNoteModal.type}</h3>
+          <h3>{addNoteModal ? addNoteModal.type : editNoteModal.type}</h3>
           <i
             className="fa-solid fa-xmark"
             onClick={() =>
-              setAddNoteModal((prev) => ({ ...prev, show: false }))
+              setAddNoteModal
+                ? setAddNoteModal((prev) => ({ ...prev, show: false }))
+                : setEditNoteModal((prev) => ({ ...prev, show: false }))
             }
           ></i>
         </div>
-        <div className="modal-content">
+        <form className="modal-content" onSubmit={submitHandler}>
           <input
             type="text"
             placeholder="Write a note"
-            value={noteData?.text}
+            value={noteData.text}
             onChange={(e) => setNoteData({ ...noteData, text: e.target.value })}
+            required
           />
-          <button
-            onClick={
-              videoState?.videoData
-                ?.find((video) => video?._id === id)
-                ?.notes?.find((note) => note?.id === addNoteModal?.id)
-                ? editHandler
-                : addHandler
-            }
-          >
-            {videoState?.videoData
-              ?.find((video) => video?._id === id)
-              ?.notes?.find((note) => note?.id === addNoteModal?.id)
-              ? "Edit Note"
-              : "Add new Note"}
-          </button>
-        </div>
+          <button type="submit">{note ? "Edit Note" : "Add new Note"}</button>
+        </form>
       </div>
     </div>
   );

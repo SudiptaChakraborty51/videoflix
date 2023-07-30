@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./playlistCard.css";
 import { VideoContext } from "../../contexts/videoContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PlaylistCard = ({ playlist }) => {
   const { videoDispatch } = useContext(VideoContext);
@@ -18,6 +19,7 @@ const PlaylistCard = ({ playlist }) => {
         onClick={(e) => {
           e.stopPropagation();
           videoDispatch({ type: "DELETE_PLAYLIST", payload: playlist?.name });
+          toast.warn("Playlist is deleted");
         }}
       ></i>
       <img src={playlist?.src} alt={playlist?.name} />

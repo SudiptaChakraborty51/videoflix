@@ -5,6 +5,7 @@ import { VideoContext } from "../../contexts/videoContext";
 import "./singleVideo.css";
 import AddNote from "../../components/AddNote/addNote";
 import AddModal from "../../components/AddModal/addModal";
+import { toast } from "react-toastify";
 
 const SingleVideo = () => {
   const { ID } = useParams();
@@ -52,23 +53,25 @@ const SingleVideo = () => {
                 <i
                   className="fa-solid fa-clock"
                   title="remove from watch later"
-                  onClick={() =>
+                  onClick={() => {
                     videoDispatch({
                       type: "REMOVE_FROM_WATCH_LATER",
                       payload: selectedVideo,
-                    })
-                  }
+                    });
+                    toast.success("Video is removed from watch later");
+                  }}
                 ></i>
               ) : (
                 <i
                   className="fa-regular fa-clock"
                   title="add to watch later"
-                  onClick={() =>
+                  onClick={() => {
                     videoDispatch({
                       type: "ADD_TO_WATCH_LATER",
                       payload: selectedVideo,
-                    })
-                  }
+                    });
+                    toast.success("Video is added to watch later");
+                  }}
                 ></i>
               )}
               <i
@@ -125,15 +128,16 @@ const SingleVideo = () => {
                     <i
                       className="fa-solid fa-trash-can"
                       title="delete-note"
-                      onClick={() =>
+                      onClick={() => {
                         videoDispatch({
                           type: "DELETE_NOTE",
                           payload: {
                             id: currNote?.id,
                             videoId: selectedVideo?._id,
                           },
-                        })
-                      }
+                        });
+                        toast.warn("Note is deleted");
+                      }}
                     ></i>
                   </div>
                 </div>

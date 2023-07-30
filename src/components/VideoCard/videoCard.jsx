@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./videoCard.css";
 import { useNavigate } from "react-router-dom";
 import { VideoContext } from "../../contexts/videoContext";
+import { toast } from "react-toastify";
 
 const VideoCard = ({ video }) => {
   const navigate = useNavigate();
@@ -13,13 +14,16 @@ const VideoCard = ({ video }) => {
         <i
           className="fa-solid fa-clock"
           title="remove from watch later"
-          onClick={() =>
+          onClick={() =>{
             videoDispatch({ type: "REMOVE_FROM_WATCH_LATER", payload: video })
+            toast.success("Video is removed from watch later")}
           }
         ></i>
       ) : (
-        <i className="fa-regular fa-clock" title="add to watch later" onClick={() =>
-          videoDispatch({ type: "ADD_TO_WATCH_LATER", payload: video })
+        <i className="fa-regular fa-clock" title="add to watch later" onClick={() =>{
+          videoDispatch({ type: "ADD_TO_WATCH_LATER", payload: video });
+          toast.success("Video is added to watch later")
+        }
         }></i>
       )}
 

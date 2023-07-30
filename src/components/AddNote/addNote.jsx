@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./addNote.css";
 import { VideoContext } from "../../contexts/videoContext";
+import { toast } from "react-toastify";
 
 const AddNote = ({
   addNoteModal,
@@ -27,6 +28,7 @@ const AddNote = ({
           noteId: note?.id,
         },
       });
+      toast.success("Note is edited successfully");
     } else {
       videoDispatch({
         type: "ADD_NOTE",
@@ -36,6 +38,7 @@ const AddNote = ({
           noteId: note?.id,
         },
       });
+      toast.success("Note is added successfully");
     }
     setNoteData("");
     setAddNoteModal && setAddNoteModal({ ...addNoteModal, show: false });

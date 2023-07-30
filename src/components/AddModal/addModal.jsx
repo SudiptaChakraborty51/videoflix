@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./addModal.css";
 import { VideoContext } from "../../contexts/videoContext";
+import { toast } from "react-toastify";
 
 const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
   const [playlistData, setPlaylistData] = useState({
@@ -16,12 +17,13 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
     if (
       videoState?.playlists?.some(
         (playlist) =>
-          playlist?.name?.toLowerCase() !== playlistData?.name?.toLowerCase()
+          playlist?.name?.toLowerCase().trim() !== playlistData?.name?.toLowerCase().trim()
       )
     ) {
       videoDispatch({ type: "ADD_PLAYLIST", payload: playlistData });
+      toast.success("Playlist is created");
     } else {
-      alert("This playlist is already exists!");
+      toast.error("This playlist is already exists!");
     }
     setAddModal({ ...addModal, show: false });
   };
@@ -67,12 +69,13 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
                     if (
                       playlist?.videos?.some(({ _id }) => _id === video?._id)
                     ) {
-                      alert("This video is already exists in the playlist!");
+                      toast.error("This video is already exists in the playlist!");
                     } else {
                       videoDispatch({
                         type: "ADD_VIDEO_TO_PLAYLIST",
                         payload: { video: video, playlistName: playlist?.name },
                       });
+                      toast.success("Video is added to playlist");
                     }
                     setAddModal({ ...addModal, show: false });
                   }}
@@ -82,12 +85,13 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
                 <i
                   className="fa-solid fa-circle-xmark"
                   title="delete playlist"
-                  onClick={() =>
+                  onClick={() => {
                     videoDispatch({
                       type: "DELETE_PLAYLIST",
                       payload: playlist?.name,
-                    })
-                  }
+                    });
+                    toast.warn("Playlist is deleted");
+                  }}
                 ></i>
               </div>
             ))}

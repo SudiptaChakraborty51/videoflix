@@ -4,6 +4,7 @@ import Sidebar from "../../components/Sidebar/sidebar";
 import { useParams } from "react-router-dom";
 import { VideoContext } from "../../contexts/videoContext";
 import VideoCard from "../../components/VideoCard/videoCard";
+import { toast } from "react-toastify";
 
 const SinglePlaylist = () => {
   const { playlistName } = useParams();
@@ -29,12 +30,13 @@ const SinglePlaylist = () => {
                 <i
                   className="fa-solid fa-circle-xmark"
                   title="remove fom playlist"
-                  onClick={() =>
+                  onClick={() => {
                     videoDispatch({
                       type: "REMOVE_FROM_PLAYLIST",
                       payload: { videoId: video?._id, playlistName },
-                    })
-                  }
+                    });
+                    toast.warn("Video is removed from playlist");
+                  }}
                 ></i>
                 <VideoCard key={video?._id} video={video} />
               </div>

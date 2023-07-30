@@ -13,9 +13,14 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
 
   const addHandler = (e) => {
     e.preventDefault();
-    if(videoState?.playlists?.some((playlist) => playlist?.name?.toLowerCase() !== playlistData?.name?.toLowerCase())) {
+    if (
+      videoState?.playlists?.some(
+        (playlist) =>
+          playlist?.name?.toLowerCase() !== playlistData?.name?.toLowerCase()
+      )
+    ) {
       videoDispatch({ type: "ADD_PLAYLIST", payload: playlistData });
-    }else {
+    } else {
       alert("This playlist is already exists!");
     }
     setAddModal({ ...addModal, show: false });
@@ -59,12 +64,18 @@ const AddModal = ({ addModal, setAddModal, fromSingleVideo, video }) => {
               <div key={playlist?.name} className="playlist-item">
                 <p
                   onClick={() => {
-                    videoDispatch({
-                      type: "ADD_VIDEO_TO_PLAYLIST",
-                      payload: { video: video, playlistName: playlist?.name },
-                    });
-                    setAddModal({...addModal, show: false});}
-                  }
+                    if (
+                      playlist?.videos?.some(({ _id }) => _id === video?._id)
+                    ) {
+                      alert("This video is already exists in the playlist!");
+                    } else {
+                      videoDispatch({
+                        type: "ADD_VIDEO_TO_PLAYLIST",
+                        payload: { video: video, playlistName: playlist?.name },
+                      });
+                    }
+                    setAddModal({ ...addModal, show: false });
+                  }}
                 >
                   {playlist?.name}
                 </p>
